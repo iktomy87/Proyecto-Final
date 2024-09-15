@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"
+</head>
+<body>
+<h1>Blog</h1>
+<a href="{% url "blog_index" %}">Inicio</a>
+<hr>
+{% block page_titulo %}{% endblock page_titulo %}
+{% block page_content %}{% endblock page_content %}
+</body>
+</html>
