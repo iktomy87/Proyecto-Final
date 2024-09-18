@@ -9,16 +9,16 @@ def blog_index(request):
     context = {
         "posts": posts,
     }
-    return render(request, 'C:/Users/Usuario/Desktop/Proyectos/informatorio 2024/Proyecto final/Repositorio/blog/templates/index.html', context)
+    return render(request, 'index.html', context)
 
 def blog_category(request, categoria):
     posts = Post.objects.filter(
-        categories__name__contains=categoria).order_by("-hora_creacion")
+        categorias__name__contains=categoria).order_by("-hora_creacion")
     context = {
         "categoria": categoria,
         "posts": posts,
     }
-    return render(request, 'C:/Users/Usuario/Desktop/Proyectos/informatorio 2024/Proyecto final/Repositorio/blog/templates/category.html', context)
+    return render(request, 'categoria.html', context)
 
 
 def blog_detail(request, pk):
@@ -40,4 +40,4 @@ def blog_detail(request, pk):
         "comments": comments,
         "form": CommentForm(),
     }
-    return render(request, 'C:/Users/Usuario/Desktop/Proyectos/informatorio 2024/Proyecto final/Repositorio/blog/templates/detail.html', context)
+    return render(request, 'detail.html', context)
