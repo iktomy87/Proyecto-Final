@@ -15,19 +15,23 @@
     </small>
     <p>{{ post.cuerpo | linebreaks }}</p>
 
+    <div class="mb-5"></div>
     <h3>Deja un comentario:</h3>
+    <div class="mb-4"></div>
     <form method="post">
         {% csrf_token %}
-        <div>
+        <div class="mb-4">
             {{ form.autor }}
         </div>
-        <div>
+        <div class="mb-4">
             {{ form.body }}
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 
+    <div class="mb-5"></div>
     <h3>Comentarios:</h3>
+    <div class="mb-5"></div>
     {% for comentario in comments %}
         <p>
             En {{ comentario.hora_creacion.date }} <b>{{ comentario.autor }}</b> escribió:

@@ -17,6 +17,7 @@ class Post(models.Model):
     hora_creacion = models.DateTimeField(auto_now_add=True)
     ultimo_cambio = models.DateTimeField(auto_now=True)
     categorias = models.ManyToManyField("Categoria", related_name="posts")
+    imagen = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.titulo
