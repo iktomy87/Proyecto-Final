@@ -11,6 +11,13 @@ def blog_index(request):
     }
     return render(request, 'index.html', context)
 
+def acerca_de(request):
+    posts = Post.objects.all().order_by("-hora_creacion")
+    context = {
+        "posts": posts,
+    }
+    return render(request, 'acerca_de.html', context)
+
 def blog_category(request, categoria):
     posts = Post.objects.filter(
         categorias__name__contains=categoria).order_by("-hora_creacion")
