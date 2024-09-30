@@ -1,0 +1,23 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iniciar Sesión</title>
+  </head>
+  <body>
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+
+    {% if next %}
+    <p>
+      Debes iniciar sesión para acceder a <a href="{{ next }}">{{ next }}</a>
+    </p>
+    {% endif %} {% if form.non_field_errors %}
+    <p style="color: red">{{ form.non_field_errors }}</p>
+    {% endif %}
+  </body>
+</html>

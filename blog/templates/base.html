@@ -28,10 +28,18 @@
               </li>
             </ul>
             <span class="navbar-text">
-                <form class="container-fluid justify-content-start">
-                    <button class="btn btn-outline-success me-2" type="button">REGISTRARSE</button>
-                    <button class="btn btn-sm btn-outline-secondary" type="button">Iniciar Sesión</button>
-                  </form>
+                <div class="container-fluid d-flex justify-content-start">
+                    <a href="{% url 'registro' %}" class="btn btn-outline-success me-2">Regístrate</a>
+                    
+                    {% if user.is_authenticated %}
+                      <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Cerrar Sesión</button>
+                      </form>
+                    {% else %}
+                      <a href="/login" class="btn btn-primary">Iniciar Sesión</a>
+                    {% endif %}
+                </div>
             </span>
           </div>
         </div>

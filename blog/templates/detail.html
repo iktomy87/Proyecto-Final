@@ -26,7 +26,12 @@
         <div class="mb-4">
             {{ form.body }}
         </div>
+        {% if user.is_authenticated %}
         <button type="submit" class="btn btn-primary">Enviar</button>
+        {% else %}
+        <a href="/login" class="btn btn-primary">Login</a>
+        <p><small>*para comentar primero debes logearte</small></p>
+        {% endif %}
     </form>
 
     <div class="mb-5"></div>
@@ -39,5 +44,13 @@
         <p>
             {{ comentario.cuerpo | linebreaks }}
         </p>
+        
+  {% if is_colab %}
+    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+  {% elif comentario.autor == user %}
+    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+  {% endif %}
+
+
     {% endfor %}
 {% endblock page_content %}
