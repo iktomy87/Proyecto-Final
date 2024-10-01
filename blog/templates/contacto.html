@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Contacto
+{% endblock page_title %}
+
+{% block page_head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            margin-top: 20px; 
+            margin-bottom: 10px; 
+        }
+        p {
+            margin-bottom: 15px;
+        }
+    </style>
+{% endblock page_head %}
+
+{% block page_titulo %}
+<h2>Información de Contacto</h2>
+{% endblock page_titulo %}
+
+{% block page_content %}
+<p>
+    <i class="fas fa-globe"></i>
+    <strong>Página Web: </strong><a href="https://campus-informatorio.chaco.gob.ar/" target="_blank" rel="noopener noreferrer">https://campus-informatorio.chaco.gob.ar/</a>
+</p>
+<p>
+    <i class="fas fa-envelope"></i>
+    <strong>Email: </strong><a href="mailto:informatorio@chaco.gob.ar" target="_blank" rel="noopener noreferrer">informatorio@chaco.gob.ar</a>
+</p>
+<p>
+    <i class="fas fa-phone"></i>
+    <strong>Teléfono:</strong> 0362 15-430-6678
+</p>
+<p>
+    <i class="fas fa-map-marker-alt"></i>
+    <strong>Dirección: </strong><a href="https://maps.app.goo.gl/GaowuU8q1aP7nfXC9" target="_blank" rel="noopener noreferrer">H3504ATE, Arturo Illia 1055, H3504ATE Resistencia, Chaco</a>
+</p>
+<iframe 
+    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14161.055279580763!2d-58.978733!3d-27.4610449!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450ce8b2457993%3A0xb6cc63aac9bf8073!2sInformatorio!5e0!3m2!1ses-419!2sar!4v1727548257590!5m2!1ses-419!2sar"
+    width="300" 
+    height="200" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+<h2>Redes Sociales</h2>
+<div class="d-flex">
+    <a href="https://www.facebook.com/informatorio.chaco/" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center me-3">
+        <i class="fab fa-facebook social-icon" style="color: #3b5998;"></i>
+        <span class="ms-2">Facebook</span>
+    </a>
+    <a href="https://twitter.com/informatorioch" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center me-3">
+        <i class="fab fa-twitter social-icon" style="color: #1DA1F2;"></i>
+        <span class="ms-2">Twitter</span>
+    </a>
+    <a href="https://www.instagram.com/informatorio/?hl=es" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center">
+        <i class="fab fa-instagram social-icon" style="color: #C13584;"></i>
+        <span class="ms-2">Instagram</span>
+    </a>
+</div>
+{% endblock page_content %}

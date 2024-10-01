@@ -41,3 +41,7 @@ def blog_detail(request, pk):
         "form": CommentForm(),
     }
     return render(request, 'detail.html', context)
+
+
+def blog_contact(request):
+    return render(request, 'contacto.html')
