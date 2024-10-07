@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block page_titulo %}
+<h1>Registrarse</h1>
+{% endblock page_titulo %}
+
+{% block page_content %}
+
+<div class="container py-5">
+    <form method="post" action="{% url 'registro' %}">
+        {% csrf_token %}
+
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+
+        
+        <div class="mb-3">
+            <label for="username" class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control" id="username" name="username" required">
+            <ul><li>Obligatorio. Longitud máxima de 150 caracteres. Solo puede estar formado por letras, números y los caracteres @/./+/-/_.</li></ul>
+            {% for error in form.username.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" required>
+            {% for error in form.first_name.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
+            {% for error in form.last_name.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required">
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password1" required>
+            <ul>
+                <li>Su contraseña no puede ser similar a otros componentes de su información personal.</li>
+                <li>Su contraseña debe contener por lo menos 8 caracteres.</li>
+                <li>Su contraseña no puede ser una contraseña usada muy comúnmente.</li>
+                <li>Su contraseña no puede estar formada exclusivamente por números.</li>
+            </ul>
+            {% for error in form.password1.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}         
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" id="confirm_password" name="password2" required>
+            {% for error in form.password2.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+    <p class="mt-3">¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+</div>
+
+{% endblock page_content %}

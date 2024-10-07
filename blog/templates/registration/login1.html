@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block page_titulo %}
+    <h2>Iniciar Sesión</h2>
+{% endblock page_titulo %}
+
+
+{% block page_content %}
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+
+    {% if next %}
+    <p>
+      Debes iniciar sesión para acceder a <a href="{{ next }}">{{ next }}</a>
+    </p>
+    {% endif %} {% if form.non_field_errors %}
+    <p style="color: red">{{ form.non_field_errors }}</p>
+    {% endif %}
+
+  {% endblock page_content %}
+

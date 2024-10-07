@@ -1,0 +1,101 @@
+.dropdown:hover > .dropdown-menu,
+.dropend:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0.125em;
+  margin-left: 0.125em;
+}
+
+.dropend:hover > .dropdown-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+  }
+
+  .dropdown .dropdown-menu {
+    display: none;
+  }
+
+  @media screen and (min-width: 769px) {
+    .dropend:hover > .dropdown-menu {
+      position: absolute;
+      top: 0;
+      left: 100%;
+    }
+  }
+
+
+  .navbar-brand {
+    color: #fff;
+  }
+
+
+  #main-nav .navbar-nav .nav-link {
+    color: white ; 
+    }
+
+
+  .dropdown-item:hover{
+    background-color: #4f57ba;
+    color: #fff;
+  }
+  @media screen and (min-width:992px) {
+    .dropend .dropdown-toggle{
+      margin-left: .5em;
+    }
+  }
+
+ #main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+#busqueda  {
+    color: #ffffff; 
+    background-color: #b3b3b3;
+    border-color: #b3b3b3;
+}
+
+
+.btn-primary {
+    background-color: #a4acdc;
+    border-color: #a4acdc;
+    color: black;
+}
+
+.btn-primary:hover {
+    background-color: #878ac4;
+    border-color: #878ac4 ;
+    color: black;
+}
+
+.btn-outline-success {
+    border-color: white;
+    color: white !important;
+}
+
+.btn-outline-success:hover {
+    border-color: #878ac4 !important;
+    color: white !important;
+    background-color: #878ac4;
+}
+
+#weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: black; /* Adjust based on your navbar style */
+}
+
+#weather-icon {
+  width: 25px;
+  height: 25px;
+}
+
+
+#spinner {
+    width: 25px; /* Set the desired width */
+    height: 25px; /* Set the desired height */
+}
+

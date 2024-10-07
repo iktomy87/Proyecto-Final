@@ -13,11 +13,18 @@
             </a>
         {% endfor %}
     </small>
+    <img
+          src="{{ post.imagen.url }}"
+          alt="{{ post.titulo }}"
+          class="img-fluid"
+          style="max-width: 100%"
+        />
     <p>{{ post.cuerpo | linebreaks }}</p>
 
     <div class="mb-5"></div>
     <h3>Deja un comentario:</h3>
     <div class="mb-4"></div>
+    {% if user.is_authenticated %}
     <form method="post">
         {% csrf_token %}
         <div class="mb-4">
@@ -28,6 +35,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+    {% else %}
+    <p>Solo los usuarios <strong>registrados</strong> pueden comentar. <a href="/login"">Inicia sesión</a> o <a href="{% url 'registro' %}">registrate</a>.</p>
+    {% endif %}
 
     <div class="mb-5"></div>
     <h3>Comentarios:</h3>
@@ -39,5 +49,13 @@
         <p>
             {{ comentario.cuerpo | linebreaks }}
         </p>
+        
+  {% if is_colab %}
+    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+  {% elif comentario.autor == user %}
+    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+  {% endif %}
+
+
     {% endfor %}
 {% endblock page_content %}
