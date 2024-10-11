@@ -13,9 +13,11 @@ from .forms import RegistroUsuarioForm
 def blog_index(request):
     posts = Post.objects.all().order_by("-hora_creacion")
     is_colab = request.user.groups.filter(name="Colaborador").exists()
+    posts_tendencias = Post.objects.order_by('-visitas')[:5]
     context = {
         "posts": posts,
         'is_colab': is_colab,
+        "posts_tendencias": posts_tendencias,
     }
     
     return render(request, 'index.html', context)
@@ -32,6 +34,8 @@ def blog_category(request, categoria):
 
 def blog_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.incrementar_visitas()
+    posts_tendencias = Post.objects.order_by('-visitas')[:5]
     form = CommentForm()
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -50,6 +54,7 @@ def blog_detail(request, pk):
         "comments": comments,
         "form": CommentForm(),
         'is_colab': is_colab,
+        "posts_tendencias": posts_tendencias,
     }
     return render(request, 'detail.html', context)
 
