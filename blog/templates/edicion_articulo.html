@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block page_titulo %}
+<h2 class="mb-5">Edición de artículo</h2>
+{% endblock page_titulo %} {% block page_content %}
+<h3 class="mb-3">Editar artículo</h3>
+<div class="card mb-4">
+  <div class="card-body">
+    <form
+      action="{% url 'editar_articulo' %}"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{post.id}}" />
+      <div class="form-group mb-3">
+        <input
+          type="text"
+          name="txtTitulo"
+          value="{{post.titulo}}"
+          class="form-control"
+          placeholder="Título"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <textarea
+          name="txtCuerpo"
+          rows="10"
+          class="form-control"
+          placeholder="Escribe aquí tu artículo..."
+        >
+{{post.cuerpo}}</textarea
+        >
+      </div>
+      {% if post.imagen %}
+      <h5 class="container mb-3">Imagen actual</h5>
+      <img
+        src="{{ post.imagen.url }}"
+        alt="{{ post.titulo }}"
+        class="img-fluid"
+        style="max-width: 100%"
+      />
+      {% endif %}
+      <h5 class="container my-3">Nueva imagen</h5>
+      <div class="form-group mb-3">
+        <input type="file" name="imgFoto" class="form-control" />
+      </div>
+      <h5 class="container mb-3">Categorias</h5>
+      {% for categoria in post.categorias.all %}
+      <div class="form-group mb-3">
+        <input
+          type="checkbox"
+          name="categorias[]"
+          class="form-check-input"
+          value="{{ categoria.id }}"
+          checked
+        />
+        <label class="form-check-label" for="categoria{{ categoria.id }}"
+          >{{ categoria.name }}</label
+        >
+      </div>
+      {% endfor %} {% for categoria in categoriasunm %}
+      <div class="form-group mb-3">
+        <input
+          type="checkbox"
+          name="categorias[]"
+          class="form-check-input"
+          value="{{ categoria.id }}"
+        />
+        <label class="form-check-label" for="categoria{{ categoria.id }}"
+          >{{ categoria.name }}</label
+        >
+      </div>
+      {% endfor %}
+      <div class="form-group mb-3">
+        <input
+          type="submit"
+          class="btn btn-success w-100 text-white"
+          value="Editar"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock page_content %}

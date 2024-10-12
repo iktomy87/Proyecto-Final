@@ -33,6 +33,11 @@
                     <li class="nav-item" id="main">
                         <a class="nav-link" href="{% url 'blog_contact' %}">Contacto</a>
                     </li>
+                    {% if is_colab %}
+                    <li>
+                      <a class="nav-link" href="{% url 'gestion_articulos' %}" class="nav-item">Gestionar articulos</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <span class="navbar-text">
                   <div class="container-fluid d-flex justify-content-start">

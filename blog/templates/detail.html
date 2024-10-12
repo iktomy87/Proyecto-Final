@@ -1,61 +1,151 @@
 {% extends "base.html" %}
 
 {% block page_titulo %}
-    <h2>{{ post.titulo }}</h2>
+<h2>{{ post.titulo }}</h2>
 {% endblock page_titulo %}
 
 {% block page_content %}
-    <small>
-        {{ post.hora_creacion.date }} | Categorias:
-        {% for categoria in post.categorias.all %}
-            <a href="{% url 'blog_categoria' categoria.name %}">
-                {{ categoria.name }}
-            </a>
-        {% endfor %}
-    </small>
-    <img
-          src="{{ post.imagen.url }}"
-          alt="{{ post.titulo }}"
-          class="img-fluid"
-          style="max-width: 100%"
-        />
-    <p>{{ post.cuerpo | linebreaks }}</p>
+<small>
+  {{ post.hora_creacion.date }} | Categorias:
+  {% for categoria in post.categorias.all %}
+  <a href="{% url 'blog_categoria' categoria.name %}">
+    {{ categoria.name }}
+  </a>
+  {% endfor %}
+</small>
+{% if post.imagen %}
+<img src="{{ post.imagen.url }}" alt="{{ post.titulo }}" class="img-fluid" style="max-width: 100%" />
+{% endif %}
+<p>{{ post.cuerpo | linebreaks }}</p>
 
-    <div class="mb-5"></div>
-    <h3>Deja un comentario:</h3>
-    <div class="mb-4"></div>
-    {% if user.is_authenticated %}
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-4">
-            {{ form.autor }}
+<div class="mb-5"></div>
+<h3>Deja un comentario:</h3>
+<div class="mb-4"></div>
+{% if user.is_authenticated %}
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-4">
+    {{ form.autor }}
+  </div>
+  <div class="mb-4">
+    {{ form.body }}
+  </div>
+  <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+{% else %}
+<p>Solo los usuarios <strong>registrados</strong> pueden comentar. <a href="/login"">Inicia sesión</a> o <a href=" {%
+    url 'registro' %}">registrate</a>.</p>
+{% endif %}
+
+<h3 class="my-5">Comentarios:</h3>
+
+{% for comentario in comments %}
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <div>
+          <h5 class="mb-0">{{ comentario.autor }}</h5>
+          <small class="text-muted">Publicado el {{ comentario.hora_creacion.date }}</small>
         </div>
-        <div class="mb-4">
-            {{ form.body }}
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-    {% else %}
-    <p>Solo los usuarios <strong>registrados</strong> pueden comentar. <a href="/login"">Inicia sesión</a> o <a href="{% url 'registro' %}">registrate</a>.</p>
-    {% endif %}
+      </div>
+    </div>
+    <hr>
+    <p id="comentario-{{ comentario.id }}" class="comentario-texto" data-comentario-id="{{ comentario.id }}">
+      {{ comentario.cuerpo }}
+    </p>
+    <div class="d-flex justify-content-between">
+      <div>
+        {% if is_colab %}
+        <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+        {% if comentario.autor == user %}
+        <a type="button" class="btn btn-primary"
+          onclick="abrirModal('{{ comentario.id }}', '{{ comentario.cuerpo|escapejs }}')">Editar</a>
+        {% endif %}
+        {% elif comentario.autor == user %}
+        <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+        <a type="button" class="btn btn-primary"
+          onclick="abrirModal('{{ comentario.id }}', '{{ comentario.cuerpo|escapejs }}')">Editar</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 
-    <div class="mb-5"></div>
-    <h3>Comentarios:</h3>
-    <div class="mb-5"></div>
-    {% for comentario in comments %}
-        <p>
-            En {{ comentario.hora_creacion.date }} <b>{{ comentario.autor }}</b> escribió:
-        </p>
-        <p>
-            {{ comentario.cuerpo | linebreaks }}
-        </p>
-        
-  {% if is_colab %}
-    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
-  {% elif comentario.autor == user %}
-    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
-  {% endif %}
+{% endfor %}
 
+<!-- Estructura de la ventana modal -->
+<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" data-bs-backdrop="static"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"> <!-- Aquí añadimos la clase -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="miModalLabel">Editar comentario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <textarea id="inputTexto" class="form-control" rows="4" placeholder="Escribe aquí..."
+        data-comentario-id="{{ comentario.id }}"></textarea>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" id="guardarCambios" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    {% endfor %}
+<!-- script para boton guardar cambios -->
+<script>
+  document.getElementById('guardarCambios').addEventListener('click', function () {
+    var texto = document.getElementById('inputTexto').value;
+    var comentarioId = this.getAttribute('data-comentario-id');
+
+    fetch(`/comentarios/actualizar/${comentarioId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+      body: JSON.stringify({ 'nuevo_texto': texto }),
+    })
+      .then(response => {
+        if (response.ok) {
+          var modal = bootstrap.Modal.getInstance(document.getElementById('miModal'));
+          modal.hide();
+
+          var comentarioElemento = document.getElementById(`comentario-${comentarioId}`);
+          if (comentarioElemento) {
+            comentarioElemento.textContent = texto;
+          }
+
+          setTimeout(() => {
+            location.reload();
+          }, 500);
+
+        } else {
+          console.error('Error al actualizar el comentario.');
+        }
+      })
+      .catch(error => {
+        console.error('Hubo un error en la solicitud:', error);
+      });
+  });
+</script>
+
+<!-- script para boton editar -->
+<script>
+  function abrirModal(comentarioId, comentarioTexto) {
+    // Asigna el texto del comentario al textarea
+    document.getElementById('inputTexto').value = comentarioTexto;
+
+    // Aquí puedes guardar el ID del comentario si necesitas usarlo al guardar los cambios
+    document.getElementById('guardarCambios').setAttribute('data-comentario-id', comentarioId);
+
+    // Abre el modal
+    var modal = new bootstrap.Modal(document.getElementById('miModal'));
+    modal.show();
+  }
+</script>
+
 {% endblock page_content %}
