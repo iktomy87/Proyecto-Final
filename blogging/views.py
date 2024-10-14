@@ -33,6 +33,7 @@ def blog_category(request, categoria):
 def blog_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     form = CommentForm()
+    post.incrementar_visitas()
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -59,13 +60,16 @@ def eliminar_comentario(request, id):
 
     return redirect('blog_detail', pk=comentario.post.pk)
 
+
+
+
 def registro(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Guardamos el nuevo usuario
-            login(request, user)  # Iniciamos sesión automáticamente
-            return redirect('/')  # Redireccionamos a una página después de registrar
+            user = form.save() 
+            login(request, user)  
+            return redirect('/')  
     else:
         form = RegistroUsuarioForm()
     return render(request, 'register.html', {'form': form})
@@ -105,6 +109,7 @@ def get_weather(request, lat, lon):
     response = requests.get(url)
     data = response.json()
     return JsonResponse(data)
+
 
 
 

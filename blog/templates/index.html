@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_titulo %}
-<h2>Últimas noticias</h2>
+<h1>Últimas noticias</h1>
 {% endblock page_titulo %}
 
 {% block page_content %}
@@ -13,6 +13,7 @@
           <a
             href="{% url 'blog_detail' post.pk %}"
             class="post-link text-decoration-none"
+            style="color: black;"
           >
             {{ post.titulo }}
           </a>
@@ -36,6 +37,7 @@
         />
         <p>{{ post.cuerpo | slice:":400" }}...</p>
       </div>
+      <hr>
     {% endfor %}
   {% endblock posts %}
 {% endblock page_content %}

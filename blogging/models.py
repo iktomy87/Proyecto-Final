@@ -19,6 +19,11 @@ class Post(models.Model):
     ultimo_cambio = models.DateTimeField(auto_now=True)
     categorias = models.ManyToManyField("Categoria", related_name="posts")
     imagen = models.ImageField(upload_to='images/', null=True, blank=True)
+    visitas = models.IntegerField(default=0)
+
+    def incrementar_visitas(self):
+        self.visitas += 1
+        self.save()
 
     def __str__(self):
         return self.titulo

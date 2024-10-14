@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_titulo %}
-    <h2>{{ post.titulo }}</h2>
+    <h1>{{ post.titulo }}</h1>
 {% endblock page_titulo %}
 
 {% block page_content %}
@@ -13,6 +13,7 @@
             </a>
         {% endfor %}
     </small>
+    <hr>
     <img
           src="{{ post.imagen.url }}"
           alt="{{ post.titulo }}"
@@ -21,6 +22,13 @@
         />
     <p>{{ post.cuerpo | linebreaks }}</p>
 
+    <div class="share-buttons" style="margin-top: 30px;">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary"><i class="fa-brands fa-facebook"></i> Compartir en Facebook</a>
+        <a href="https://api.whatsapp.com/send?text={{ post.titulo }}%20{{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Compartir en WhatsApp</a>
+
+
+    </div>
+ 
     <div class="mb-5"></div>
     <h3>Deja un comentario:</h3>
     <div class="mb-4"></div>
@@ -52,8 +60,10 @@
         
   {% if is_colab %}
     <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+
   {% elif comentario.autor == user %}
     <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-block btn-danger">Eliminar</a>
+
   {% endif %}
 
 

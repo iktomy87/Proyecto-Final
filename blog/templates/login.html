@@ -5,7 +5,7 @@
 {% endblock page_titulo %}
 
 {% block page_content %}
-<div class="container py-5">
+<div class="wrapper container py-4">
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         {% if form.non_field_errors %}
