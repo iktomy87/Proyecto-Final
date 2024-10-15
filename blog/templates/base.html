@@ -33,6 +33,11 @@
                     <li class="nav-item" id="main">
                         <a class="nav-link" href="{% url 'blog_contact' %}">Contacto</a>
                     </li>
+                    {% if is_colab %}
+                    <li>
+                      <a class="nav-link" href="{% url 'gestion_articulos' %}" class="nav-item">Gestionar articulos</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <span class="navbar-text">
                   <div class="container-fluid d-flex justify-content-start">
@@ -137,9 +142,6 @@
           </div>
         </nav>
         
-
-
-      <body>
         <div class="container py-5">
           <div class="row">
 
@@ -149,9 +151,10 @@
                   <p>{% block page_content %}{% endblock page_content %}</p>
                 </div>
             </div>
+      
 
 
-              <div class="col-md-4 ms-auto" >
+              <div class="col-md-4 ms-auto">
                 <h3 style="text-align: center;">Tendencias</h3>
                 {% for post in posts_tendencias %}
                 <div class="card mb-3">
@@ -172,7 +175,7 @@
             </div>
           </div>
         </div>
-      </body>
+   
   
       <footer class="py-4" style="background-color: #4f57ba; color: white;">
         <div class="container d-flex justify-content-between align-items-center">

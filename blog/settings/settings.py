@@ -59,6 +59,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'blog.urls'
 
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -75,6 +76,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 

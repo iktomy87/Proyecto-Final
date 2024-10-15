@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const url = `/get_weather/${lat}/${lon}/`;
 
-            // Show spinner and hide weather icon
             document.getElementById('spinner').style.display = 'block';
             document.getElementById('weather-icon').style.display = 'none';
 

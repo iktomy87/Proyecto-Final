@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+<!--  -->
+{% block page_titulo %}
+<h2 class="mb-5">Gestión de artículos</h2>
+{% endblock page_titulo %}
+<!--  -->
+{% block page_content %}
+<h3 class="mb-3">Crear artículo</h3>
+<div class="card mb-4">
+  <div class="card-body">
+    <form
+      action="{% url 'crear_articulo' %}"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <input
+          type="text"
+          name="txtTitulo"
+          class="form-control"
+          placeholder="Título"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <textarea
+          name="txtCuerpo"
+          rows="10"
+          class="form-control"
+          placeholder="Escribe aquí tu artículo..."
+        ></textarea>
+      </div>
+      <h5 class="container mb-3">Imagen</h5>
+      <div class="form-group mb-3">
+        <input type="file" name="imgFoto" class="form-control" />
+      </div>
+      <h5 class="container mb-3">Categorias</h5>
+      {% for categoria in categorias %}
+      <div class="form-group mb-3">
+        <input
+          type="checkbox"
+          name="categorias[]"
+          class="form-check-input"
+          value="{{ categoria.id }}"
+        />
+        <label class="form-check-label" for="categoria{{ categoria.id }}"
+          >{{ categoria.name }}</label
+        >
+      </div>
+      {% endfor %}
+      <div class="form-group mb-3">
+        <input
+          type="submit"
+          class="btn btn-success w-100 text-white"
+          value="Crear"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+<h3 class="container">Listado de artículos</h3>
+{% for post in posts %}
+<div class="mb-2 px-4 py-2 card container">
+  <strong>{{ post.titulo }}</strong>
+  <small>
+    {{ post.hora_creacion.date }} | Categorías:
+    <!--  -->
+    {% for categoria in post.categorias.all %}
+    <!--  -->
+    <span class="text-primary"> {{ categoria.name }} </span>
+    {% endfor %}
+    <p class="my-2 row">
+      <a
+        href="{% url 'edicion_articulo' post.id %}"
+        class="btn btn-primary w-50"
+        >Editar</a
+      >
+      <a
+        href="{% url 'eliminar_articulo' post.id %}"
+        class="btn btn-danger w-50"
+        >Eliminar</a
+      >
+    </p>
+  </small>
+</div>
+{% endfor %}
+<!--  -->
+{% endblock page_content %}
